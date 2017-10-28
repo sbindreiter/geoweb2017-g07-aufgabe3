@@ -1,0 +1,36 @@
+{
+  "type": "FeatureCollection",
+  "features": [{
+      "type": "Feature",
+      "properties": {
+        "Name": "Stefan Bindreiter"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [16.334095001220703, 48.2101608170861]
+      }
+    }, {
+      "type": "Feature",
+      "properties": {
+        "Name": "Oliver Kern"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [16.330275535583496, 48.17581645252233]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Tobias Puchner"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.323055028915405,
+          48.182423200925605
+        ]
+      }
+    }
+  ]
+}
