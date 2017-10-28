@@ -1,28 +1,32 @@
 # geoweb2017-g07-aufgabe3
 geoweb2017
 
-github befehle
-[eckige klammern zeigen parameter und werden nicht geschrieben]
+Anleitung (für Windows) um das Projekt geoweb2017-g07-aufgabe3
+in einem Openlayer-Workspace anzusehen.
 
-git clone [projektname]
-cloned im browser angelegtes projekt in aktuelles verzeichnis auf die lokale festplatte
+0. Installation des Openlayer-Workspaces und anlegen eines Git-Hub Accounts,
+   sowie Installation von Git (kann übersprungen werden, wenn bereits vorhanden):
+   - Ansonsten openlayers-workshop-en.zip herunterladen und extrahieren
+     Download unter: https://github.com/openlayers/workshop/releases/tag/v4.3.1.en.3
+   - Falls node.js nicht installiert ist: Node herunterladen und installieren
+     Download unter: https://nodejs.org
+   - Auf https://github.com/ einen User-Account anlegen
+   - Git herunterladen und installieren
+     Download unter: https://desktop.github.com/ und youtube-Tutorial ansehen (https://www.youtube.com/watch?v=0fKg7e37bQE)
 
-git add [filename]
-fügt dateien zu commit-Vorgang hinzu
-Parameter . anstelle von filename -> alle files in aktuellem verzeichnis
-Parameter /a anstelle von filename -> alle files des projects
+1. Openlayer-Workspace installieren und einrichten:
+   - Eingabeaufforderung (cmd-window) starten (Windows-Start Button und cmd eintippen)
+   - im cmd-window mit 'cd' ins extrahierte "openlayers-workshop-en"-Verzeichnis wechseln
+   - dort den Befehl 'npm install' ausführen (installiert alle packages für openlayer)
+   - danach den Befehl 'npm start' ausführen (startet server)
+2. Git Project Clonen und von Dateien von Server holen:
+   - In einer neuen Eingabeaufforderung in das gewünschte Zielverzeichnis wechseln
+   - Den Befehl 'git clone https://github.com/sbindreiter/geoweb2017-g07-aufgabe3.git'
+     ausführen, um das Projekt auf die Lokale Festplatte zu ziehen.
+   - Die enthaltenen Dateien index.html, main.js, package.json müssen in den Openlayer-Workspace
+     (siehe Schritt 0) kopiert werden. Die Datei map.geojson im Unterverzeichnis data muss auch im Openlayer-Workspace ins Unterverzeichnis 'data' kopiert werden.
+3. Testen der Web-Karte im Browser:
+   - Internet-Browser starten
+   - localhost:3000 in die Adressleiste eingeben
 
-git status
-Gibt Projektstatus zurück -> Infos ob alle Files aktuell sind, usw. ...
-
-git commit -m "commit-text"
-committed alle durch add hinzugefügten dateien
-anstelle von "commit-text" beschreibt man die durchgeführten änderungen, damit die anderen Mitarbeiter wissen, was sich in dem commmit geändert hat
-ruft git commit ohne den parameter -m "text" auf so öffnet sich ein mehrzeiliges editierfeld. > um dieses zu verlassen muss man Escape drücken und dann :wq schreiben
-
-git push
-schiebt alle committed änderungen auf den server
-(dann sind diese auch im browser sichtbar)
-
-git pull
-holt aktuelle version vom server
+Info: Eine Übersicht der wichtigsten Git-Befehle finden Sie in der Datei 'github_befehle.txt'

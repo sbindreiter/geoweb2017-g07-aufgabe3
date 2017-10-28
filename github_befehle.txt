@@ -1,0 +1,25 @@
+github befehle
+[eckige klammern zeigen parameter und werden nicht geschrieben]
+
+git clone [projektname]
+cloned im browser angelegtes projekt in aktuelles verzeichnis auf die lokale festplatte
+
+git add [filename]
+fügt dateien zu commit-Vorgang hinzu
+Parameter . anstelle von filename -> alle files in aktuellem verzeichnis
+Parameter /a anstelle von filename -> alle files des projects
+
+git status
+Gibt Projektstatus zurück -> Infos ob alle Files aktuell sind, usw. ...
+
+git commit -m "commit-text"
+committed alle durch add hinzugefügten dateien
+anstelle von "commit-text" beschreibt man die durchgeführten änderungen, damit die anderen Mitarbeiter wissen, was sich in dem commmit geändert hat
+ruft git commit ohne den parameter -m "text" auf so öffnet sich ein mehrzeiliges editierfeld. > um dieses zu verlassen muss man Escape drücken und dann :wq schreiben
+
+git push
+schiebt alle committed änderungen auf den server
+(dann sind diese auch im browser sichtbar)
+
+git pull
+holt aktuelle version vom server
