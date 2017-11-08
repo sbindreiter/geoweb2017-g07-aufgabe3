@@ -23,7 +23,7 @@ in einem Openlayer-Workspace anzusehen.
    - In einer neuen Eingabeaufforderung in das gewünschte Zielverzeichnis wechseln
    - Den Befehl 'git clone https://github.com/sbindreiter/geoweb2017-g07-aufgabe3.git'
      ausführen, um das Projekt auf die Lokale Festplatte zu ziehen.
-   - Die enthaltenen Dateien index.html, main.js, package.json müssen in den Openlayer-Workspace
+   - Die enthaltenen Dateien index.html, main.js, package.json, webpack.config.js müssen in den Openlayer-Workspace
      (siehe Schritt 0) kopiert werden. Die Datei map.geojson im Unterverzeichnis data muss auch im Openlayer-Workspace ins Unterverzeichnis 'data' kopiert werden.
 3. Testen der Web-Karte im Browser:
    - Internet-Browser starten
