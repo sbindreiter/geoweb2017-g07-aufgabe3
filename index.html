@@ -3,20 +3,93 @@
 
 <head>
   <meta charset="utf-8" name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-  <title>OpenLayers</title>
+  <title>Geoweb 2017 - g07 - UE4</title>
   <style>
-    html,
-    body,
-    .fullscreen {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
-  </style>
+		html,
+		body,
+		#map {
+			font-family: sans-serif;
+			margin: 0;
+			height: 100%;
+			width: 100%;
+		}
+		#q {
+			position: relative;
+			top: 30px;
+			left: 50px;
+			z-index: 1;
+			width: 300px;
+		}
+</style>
 </head>
 
 <body>
-  <div id="map" class="fullscreen"></div>
+	<div id="map">
+    <input id="q" name="q" type="text" placeholder="Enter address here..."></input>
+  </div>
 </body>
 
 </html>
+<!--
+"_comment" : "
+{
+  "id": "ausserguertel",
+  "type": "fill",
+  "source": "bezirksgrenzenogd",
+  "filter": [
+    "all",
+    [
+      ">=",
+      "DISTRICT_CODE",
+      1110
+    ]
+  ],
+  "paint": {
+    "fill-color": "rgba(41, 48, 210, 1)",
+    "fill-outline-color": "rgba(4, 4, 4, 1)",
+    "fill-opacity": 0.3
+  }
+},
+{
+  "id": "innerguertel",
+  "type": "fill",
+  "source": "bezirksgrenzenogd",
+  "filter": [
+    "all",
+    [
+      ">",
+      "DISTRICT_CODE",
+      1010
+    ],
+    [
+      "<",
+      "DISTRICT_CODE",
+      1110
+    ]
+  ],
+  "paint": {
+    "fill-color": "rgba(208, 208, 67, 1)",
+    "fill-outline-color": "rgba(4, 4, 4, 1)",
+    "fill-opacity": 0.3
+  }
+},
+{
+  "id": "innenstadt",
+  "type": "fill",
+  "source": "bezirksgrenzenogd",
+  "minzoom": 0,
+  "filter": [
+    "all",
+    [
+      "==",
+      "DISTRICT_CODE",
+      1010
+    ]
+  ],
+  "paint": {
+    "fill-color": "rgba(230, 18, 38, 1)",
+    "fill-outline-color": "rgba(4, 4, 4, 1)",
+    "fill-opacity": 0.3
+  }
+}"
+-->
