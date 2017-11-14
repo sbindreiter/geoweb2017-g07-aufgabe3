@@ -95,7 +95,6 @@ new AutoComplete({
           (properties.street || '') + ' ' +
           (properties.housenumber || '');
       });
-      alert(texts);
       response(texts);
       map.getView().fit(source.getExtent(), {
         maxZoom: 19,
