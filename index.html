@@ -2,35 +2,117 @@
 <html>
 
 <head>
-  <meta charset="utf-8" name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+  <!--<meta charset="utf-8" name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">-->
   <title>Geoweb 2017 - g07 - UE4</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <style>
-		html,
-		body,
-		#map {
-			font-family: sans-serif;
-			margin: 0;
-			height: 100%;
-			width: 100%;
-		}
-		#q {
-			position: relative;
-			top: 30px;
-			left: 50px;
-			z-index: 1;
-			width: 300px;
-		}
+<!--        html,
+        body,-->
+        #map {
+            font-family: sans-serif;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #q {
+            position: relative;
+            top: 30px;
+            left: 50px;
+            z-index: 1;
+            width: 300px;
+        }
+
+    .arrow_box {
+        position: relative;
+        background: #fff;
+        border: 1px solid #003c88;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    .arrow_box:after, .arrow_box:before {
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    .arrow_box:after {
+        border-color: rgba(255, 255, 255, 0);
+        border-top-color: #fff;
+        border-width: 10px;
+        margin-left: -10px;
+    }
+    .arrow_box:before {
+        border-color: rgba(153, 153, 153, 0);
+        border-top-color: #003c88;
+        border-width: 11px;
+        margin-left: -11px;
+    }
+
 </style>
+    <link rel="stylesheet" type="text/css" href="style.css" >
+    <link rel="stylesheet" type="text/css" href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/g7default.css">
 </head>
 
-<body>
-	<div id="map">
+<body onscroll="navbars2Top()">
+
+<div class="header">
+</div>
+
+<div id="navbar">
+  <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/start_content_grp.htm">Welcome</a>
+  <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/mitarbeiter.htm">Team</a>
+  <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/projektbeschreibung.htm">Projekt</a>
+  <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/intranet/feedback.php">Feedback</a>
+  <a class="active intranet" href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/intranet/start_intranet.htm">Intranet</a>
+</div>
+<div id="navbarsub">
+  <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/intranet/uebungsbeispiele.htm">PHP Beispiele</a>
+  <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/intranet/uebungsbeispiele2.htm">PostgreSQL Beispiele</a>
+  <a class="active" href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/intranet/uebungsbeispiele3.htm">Openlayer Beispiele</a>
+  <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/intranet/uebungen/feedback_anzeige.php">Gesammeltes Feedback</a>
+</div>
+
+<div class="content">
+  <div id="map">
     <input id="q" name="q" type="text" placeholder="Enter address here..."></input>
+    <div class="arrow_box" id="popup-container"></div>
   </div>
+<script type="text/javascript" src="main.48be91389c933c22fbc9.js"></script>
+</div>
+<div class="footer">
+<p> Copyright &copy; 2017 <a href="https://student.ifip.tuwien.ac.at/geoweb/2017/g07/impressum.htm" target="self">geowebgruppe7</a></p>
+</div>
 </body>
+
+<script>
+var navbar = document.getElementById("navbar");
+var navbarsub = document.getElementById("navbarsub");
+var sticky = navbarsub.offsetTop;
+
+function navbars2Top() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky");
+    navbarsub.classList.add("sticky_nav2");
+  } else {
+    navbar.classList.remove("sticky");
+    navbarsub.classList.remove("sticky_nav2");
+  }
+}
+</script>
 
 </html>
 <!--
+.autocomplete-suggestion
+{
+  background-image: url("data/marker.png");
+}
+
+
 "_comment" : "
 {
   "id": "ausserguertel",

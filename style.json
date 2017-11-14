@@ -70,7 +70,5 @@
           "text-anchor": "top"
       }
     }
-  ],
-  "sprites": "https://demo.tileserver.org/fonts/{fontstack}/{range}.pbf",
-  "id": "kfp20g6n2"
+  ]
 }

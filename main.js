@@ -8,14 +8,17 @@ import VectorLayer from 'ol/layer/vector';
 // import Vector from 'ol/source/vector';           //ueberfluessiges include aus UE3
 import VectorSource from 'ol/source/vector';
 import GeoJSON from 'ol/format/geojson';
+import Style from 'ol/style/style';
+import IconStyle from 'ol/style/icon';
 // import Circle from 'ol/style/circle';            //ueberfluessiges include aus UE3
-// import Style from 'ol/style/style';
 // import Text from 'ol/style/text';
 // import Fill from 'ol/style/fill';
 // import Stroke from 'ol/style/stroke';
-// import proj from 'ol/proj';
+import proj from 'ol/proj';
 import {apply} from 'ol-mapbox-style';              //additional includes für UE4
 import AutoComplete from 'javascript-autocomplete'; //additional includes für UE4
+import Overlay from 'ol/overlay';
+import coordinate from 'ol/coordinate';
 
 
 /*ehemals code der ue3*/
@@ -32,7 +35,7 @@ import AutoComplete from 'javascript-autocomplete'; //additional includes für U
 //     layer: 'watercolor'
 //   })
 // }));
-
+//
 // const home_addresses = new VectorLayer({   //ue 3
 //   source: new Vector({
 //     url: 'data/map.geojson',
@@ -72,6 +75,11 @@ var searchResult = new VectorLayer({
 });
 
 map.addLayer(searchResult);
+searchResult.setStyle(new Style({
+  image: new IconStyle({
+    src: './data/marker1.png'
+  })
+}));
 
 new AutoComplete({
   selector: 'input[name="q"]',
@@ -87,6 +95,7 @@ new AutoComplete({
           (properties.street || '') + ' ' +
           (properties.housenumber || '');
       });
+      alert(texts);
       response(texts);
       map.getView().fit(source.getExtent(), {
         maxZoom: 19,
@@ -94,5 +103,22 @@ new AutoComplete({
       });
     });
     searchResult.setSource(source);
+  }
+});
+var overlay = new Overlay({
+  element: document.getElementById('popup-container'),
+  positioning: 'bottom-center',
+  offset: [0, -10]
+});
+map.addOverlay(overlay);
+
+map.on('click', function(e) {
+  overlay.setPosition();
+  var features = map.getFeaturesAtPixel(e.pixel);
+  if (features) {
+    var coords = features[0].getGeometry().getCoordinates();
+    var hdms = coordinate.toStringHDMS(proj.toLonLat(coords));
+    overlay.getElement().innerHTML = hdms;
+    overlay.setPosition(coords);
   }
 });
