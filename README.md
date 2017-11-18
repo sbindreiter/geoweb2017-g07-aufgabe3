@@ -23,8 +23,9 @@ in einem Openlayer-Workspace anzusehen.
    - In einer neuen Eingabeaufforderung in das gewünschte Zielverzeichnis wechseln
    - Den Befehl 'git clone https://github.com/sbindreiter/geoweb2017-g07-aufgabe3.git'
      ausführen, um das Projekt auf die Lokale Festplatte zu ziehen.
-   - Die enthaltenen Dateien index.html, main.js, package.json, webpack.config.js müssen in den Openlayer-Workspace
-     (siehe Schritt 0) kopiert werden. Die Datei map.geojson im Unterverzeichnis data muss auch im Openlayer-Workspace ins Unterverzeichnis 'data' kopiert werden.
+   - In das neue Verzeichnis wechseln.
+   - Den Befehl 'npm install' ausführen.
+   - Den Befhel 'npm start' ausführen.
 3. Testen der Web-Karte im Browser:
    - Internet-Browser starten
    - localhost:3000 in die Adressleiste eingeben

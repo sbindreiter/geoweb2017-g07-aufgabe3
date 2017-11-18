@@ -69,6 +69,26 @@ var map = apply(
   'style.json'
 );
 
+
+function fit() {
+  map.getView().fit(source.getExtent(), {
+    maxZoom: 19,
+    duration: 250
+  });
+}
+
+var selected;
+function getAddress(feature) {
+  var properties = feature.getProperties();
+  return (
+    (properties.city || properties.name || '') +
+    ' ' +
+    (properties.street || '') +
+    ' ' +
+    (properties.housenumber || '')
+  );
+}
+
 /*suchfunktion UE4*/
 var searchResult = new VectorLayer({
   zIndex: 1 //
@@ -81,27 +101,36 @@ searchResult.setStyle(new Style({
   })
 }));
 
+var onload, source;
 new AutoComplete({
   selector: 'input[name="q"]',
   source: function(term, response) {
-    var source = new VectorSource({
+    if (onload) {
+      source.un('change', onload);
+    }
+    searchResult.setSource(null);
+    source = new VectorSource({
       format: new GeoJSON(),
       url: 'https://photon.komoot.de/api/?q=' + term
     });
-    source.on('change', function() {
+    onload = function(e) {
       var texts = source.getFeatures().map(function(feature) {
-        var properties = feature.getProperties();
-        return (properties.city || properties.name || '') + ', ' +
-          (properties.street || '') + ' ' +
-          (properties.housenumber || '');
+        return getAddress(feature);
       });
       response(texts);
-      map.getView().fit(source.getExtent(), {
-        maxZoom: 19,
-        duration: 250
-      });
-    });
+      fit();
+    };
+    source.once('change', onload);
     searchResult.setSource(source);
+  },
+  onSelect: function(e, term, item) {
+    selected = item.getAttribute('data-val');
+    source.getFeatures().forEach(function(feature) {
+      if (getAddress(feature) !== selected) {
+        source.removeFeature(feature);
+      }
+    });
+    fit();
   }
 });
 var overlay = new Overlay({

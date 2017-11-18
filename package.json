@@ -8,8 +8,7 @@
     "colormap": "^2.2.0",
     "ol": "^4.3.1",
     "ol-hashed": "^1.0.2",
-    "ol-mapbox-style": "^2.6.1",
-    "javascript-autocomplete": "^1.0.3"
+    "ol-mapbox-style": "^2.6.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -29,7 +28,8 @@
     "webpack": "^3.4.1",
     "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "^2.6.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "webpack-sources": "1.0.1"
   },
   "eslintConfig": {
     "extends": "openlayers",
