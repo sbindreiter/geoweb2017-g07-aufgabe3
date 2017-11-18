@@ -9,7 +9,7 @@
     "ol": "^4.3.1",
     "ol-hashed": "^1.0.2",
     "ol-mapbox-style": "^2.6.1",
-    "javascript-autocomplete": "^1.0.4"
+    "javascript-autocomplete": "^1.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
