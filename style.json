@@ -10,7 +10,9 @@
   "sources": {
     "our_homes": {
       "type": "geojson",
-      "data": "data/map.geojson"
+      "data": "data/map.geojson",
+      "minzoom": 10,
+      "maxzoom": 20
       } ,
     "bezirksgrenzenogd": {
       "type": "geojson",
