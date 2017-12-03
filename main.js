@@ -5,62 +5,20 @@ import 'javascript-autocomplete/auto-complete.css'; //additional includes für U
 // import TileLayer from 'ol/layer/tile';
 // import Stamen from 'ol/source/stamen';
 import VectorLayer from 'ol/layer/vector';
-// import Vector from 'ol/source/vector';           //ueberfluessiges include aus UE3
+import Vector from 'ol/source/vector';           //ueberfluessiges include aus UE3
 import VectorSource from 'ol/source/vector';
 import GeoJSON from 'ol/format/geojson';
 import Style from 'ol/style/style';
 import IconStyle from 'ol/style/icon';
-// import Circle from 'ol/style/circle';            //ueberfluessiges include aus UE3
+import Circle from 'ol/style/circle';            //ueberfluessiges include aus UE3
 // import Text from 'ol/style/text';
-// import Fill from 'ol/style/fill';
-// import Stroke from 'ol/style/stroke';
+import Fill from 'ol/style/fill';
+import Stroke from 'ol/style/stroke';
 import proj from 'ol/proj';
 import {apply} from 'ol-mapbox-style';              //additional includes für UE4
 import AutoComplete from 'javascript-autocomplete'; //additional includes für UE4
 import Overlay from 'ol/overlay';
 import coordinate from 'ol/coordinate';
-
-
-/*ehemals code der ue3*/
-/*ue3 part replaced by style.json*/
-// const map = new Map({
-//   target: 'map',
-//   view: new View({
-//     center: proj.fromLonLat([16.37, 48.2]),
-//     zoom: 13
-//   })
-// });
-// map.addLayer(new TileLayer({
-//   source: new Stamen({
-//     layer: 'watercolor'
-//   })
-// }));
-//
-// const home_addresses = new VectorLayer({   //ue 3
-//   source: new Vector({
-//     url: 'data/map.geojson',
-//     format: new GeoJSON(),
-//     zIndex: 9999999
-//   })
-// });
-// map.addLayer(home_addresses);
-//
-// home_addresses.setStyle(function(feature) {
-//   var image = new Circle({
-//     radius: 5,
-//     fill: new Fill({
-//       color: '#31a354'
-//     }),
-//     stroke: new Stroke({color: 'red', width: 1})
-//   });
-//   return new Style({
-//     image: image,
-//     text: new Text({
-//       text: feature.get('Name'),
-//       font: 'Bold 12pt Verdana'
-//     })
-//   });
-// });
 
 
 /*ersetzt durch sandbox ausschnitt aus ue4*/
@@ -91,7 +49,7 @@ function getAddress(feature) {
 
 /*suchfunktion UE4*/
 var searchResult = new VectorLayer({
-  zIndex: 1 //
+  zIndex: 3 //
 });
 
 map.addLayer(searchResult);
@@ -100,6 +58,39 @@ searchResult.setStyle(new Style({
     src: './data/marker1.png'
   })
 }));
+
+const bezirkeLayer = new VectorLayer({
+  source: new Vector({
+    url: 'https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:BEZIRKSGRENZEOGD&srsName=EPSG:4326&outputFormat=json',
+    format: new GeoJSON()
+  }),
+  zIndex: 2
+});
+map.addLayer(bezirkeLayer);
+
+const layer = new VectorLayer({
+  source: new Vector({
+    url: 'https://student.ifip.tuwien.ac.at/geoweb/2017/g07/map/postgis_geojson.php',
+    format: new GeoJSON()
+  }),
+  zIndex: 4
+});
+map.addLayer(layer);
+
+layer.setStyle(function(feature) {
+  return new Style({
+    image: new Circle({
+      radius: 7,
+      fill: new Fill({
+        color: 'rgba(232, 12, 12, 1)'
+      }),
+      stroke: new Stroke({
+        color: 'rgba(127, 127, 127, 1)',
+        width: 1
+      })
+    })
+  });
+});
 
 var onload, source;
 new AutoComplete({
@@ -140,13 +131,73 @@ var overlay = new Overlay({
 });
 map.addOverlay(overlay);
 
-map.on('click', function(e) {
-  overlay.setPosition();
-  var features = map.getFeaturesAtPixel(e.pixel);
-  if (features) {
-    var coords = features[0].getGeometry().getCoordinates();
-    var hdms = coordinate.toStringHDMS(proj.toLonLat(coords));
-    overlay.getElement().innerHTML = hdms;
-    overlay.setPosition(coords);
+
+map.on('singleclick', function(e) {
+  var markup = '';
+  map.forEachFeatureAtPixel(e.pixel, function(feature) {
+    var properties = feature.getProperties();
+    markup += `${markup && '<hr>'}<table>`;
+    for (var property in properties) {
+      if (property != 'geometry') {
+        markup += `<tr><th>${property}</th><td>${properties[property]}</td></tr>`;
+      }
+    }
+    markup += '</table>';
+  }, {
+    layerFilter: (l) => l === layer
+  });
+  if (markup) {
+    document.getElementById('popup-content').innerHTML = markup;
+    overlay.setPosition(e.coordinate);
+  } else {
+    overlay.setPosition();
+    var pos = proj.toLonLat(e.coordinate);
+    window.location.href =
+        'https://student.ifip.tuwien.ac.at/geoweb/2017/g07/intranet/feedback.php?pos=' +
+        pos.join(' ');
   }
+});
+
+
+function calculateStatistics() {
+  const feedbacks = layer.getSource().getFeatures();
+  const bezirke = bezirkeLayer.getSource().getFeatures();
+  if (feedbacks.length > 0 && bezirke.length > 0) {
+    for (var i = 0, ii = feedbacks.length; i < ii; ++i) {
+      var feedback = feedbacks[i];
+      for (var j = 0, jj = bezirke.length; j < jj; ++j) {
+        var bezirk = bezirke[j];
+        var count = bezirk.get('FEEDBACKS') || 0;
+        var feedbackGeom = feedback.getGeometry();
+        if (feedbackGeom &&
+            bezirk.getGeometry().intersectsCoordinate(feedbackGeom.getCoordinates())) {
+          ++count;
+        }
+        bezirk.set('FEEDBACKS', count);
+      }
+    }
+  }
+}
+bezirkeLayer.getSource().once('change', calculateStatistics);
+layer.getSource().once('change', calculateStatistics);
+
+bezirkeLayer.setStyle(function(feature) {
+  var fillColor;
+  const feedbackCount = feature.get('FEEDBACKS');
+  if (feedbackCount <= 1) {
+    fillColor = 'rgba(247, 252, 185, 0.7';
+  } else if (feedbackCount < 5) {
+    fillColor = 'rgba(173, 221, 142, 0.7)';
+  } else {
+    fillColor = 'rgba(49, 163, 84, 0.7)';
+  }
+  return new Style({
+    fill: new Fill({
+      color: fillColor
+    }),
+    stroke: new Stroke({
+      color: 'rgba(4, 4, 4, 1)',
+      width: 1
+    })
+  });
 });

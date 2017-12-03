@@ -52,6 +52,14 @@
         border-width: 11px;
         margin-left: -11px;
     }
+    #popup-content {
+      max-height: 200px;
+      overflow: scroll;
+    }
+    #popup-content th {
+      text-align: left;
+      width: 125px;
+    }
 
 </style>
     <link rel="stylesheet" type="text/css" href="style.css" >
@@ -80,7 +88,9 @@
 <div class="content">
   <div id="map">
     <input id="q" name="q" type="text" placeholder="Enter address here..."></input>
-    <div class="arrow_box" id="popup-container"></div>
+    <div class="arrow_box" id="popup-container">
+        <div id="popup-content"></div>
+    </div>
   </div>
 <script type="text/javascript" src="main.48be91389c933c22fbc9.js"></script>
 </div>
